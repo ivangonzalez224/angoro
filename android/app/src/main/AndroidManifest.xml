@@ -1,6 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!--  stream audio -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- prevents CPU from sleeping -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- run a foreground service (background audio) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- foreground service for media playback -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <!-- restart and resume after device reboot -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
       android:name=".MainApplication"
@@ -11,6 +20,7 @@
       android:theme="@style/AppTheme"
       android:usesCleartextTraffic="${usesCleartextTraffic}"
       android:supportsRtl="true">
+
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
@@ -23,5 +33,15 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+
+      <service
+        android:name="com.doublesymmetry.trackplayer.service.HeadlessJsMediaService"
+        android:foregroundServiceType="mediaPlayback"
+        android:exported="false"> <!-- only te app can interact with this service -->
+          <intent-filter>
+              <action android:name="android.intent.action.MEDIA_BUTTON" />
+          </intent-filter>
+      </service>
+
     </application>
 </manifest>
