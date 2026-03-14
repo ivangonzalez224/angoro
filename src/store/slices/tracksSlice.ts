@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { Track, ApiTrack } from '../../types/track';
 
-const API_URL = 'https://script.googleusercontent.com/macros/echo?user_content_key=AY5xjrQLVCUUjvr5YgWyx8vEuj_AxOjtr51ucLin0fvnEpWJg1dcMMhYVmzuLu_RuKFKjvF1CtPg2qPo8UPoE5Jpk27f24MxnNcs2Ae82K9-Zc2JNR7qtT0yyjZwu4DVWaUq3hJzV6ixDqMqKIs3OFpVMjLSOo5aYT--UOVvibRqI1fN7bm4Bpfu3GKnGRwPv5Lx9lZ17hjW7SjbK4tgaihBgdD-oRTUlIv76iIqq2yvczYXrhFOSlJHpth4NGNNRxHFJyW3Inq0NCEaO5t7FvCePyQJFMGDROjNywhnPzxI&lib=MEP838ssjgxz-mHnBHjQ8mAT2asBrsbrp';
+const API_URL = '';
 
 // Transformation to Track model
 const mapApiTrackToTrack = (apiTrack: ApiTrack): Track => ({
