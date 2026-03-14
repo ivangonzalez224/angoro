@@ -1,45 +1,45 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
-
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { Provider } from 'react-redux';
+import { store } from './src/store';
+import AppNavigator from './src/navigation/AppNavigator';
+import { setupPlayer } from './src/services/trackPlayerService';
 
 function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
+  const [isPlayerReady, setIsPlayerReady] = useState(false);
 
+  useEffect(() => {
+    async function initPlayer() {
+      const ready = await setupPlayer();
+      setIsPlayerReady(ready);
+    }
+    initPlayer();
+  }, []);
+
+  if (!isPlayerReady) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" color="#1DB954" />
+      </View>
+    );
+  }
+
+  return <AppNavigator />;
+}
+
+export default function App() {
   return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
+    <Provider store={store}>
+      <AppContent />
+    </Provider>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  loading: {
     flex: 1,
+    backgroundColor: '#121212',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
-
-export default App;
